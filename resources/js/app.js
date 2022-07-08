@@ -14,7 +14,7 @@ const app = createApp(App)
 app.use(BootstrapVue3)
 app.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyAArEA3V7UUnB4bsQYpI9B8pVd7wytVGek'
+        key: import.meta.env.VITE_GOOGLE_MAP_API_KEY
     },
 })
 app.component("vue3-star-ratings", vue3StarRatings);

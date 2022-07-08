@@ -1,7 +1,7 @@
 <template>
     <AppLayout title="Index">
         <b-row>
-            <b-col cols="4">
+            <b-col lg="4">
                 <b-form @submit="getall">
 
                     <b-input-group class="mb-3">
@@ -22,15 +22,10 @@
                     <RestaurantsList :restaurants="restaurants" @getRestaurant="onGetRestaurant" />
                 </b-overlay>
             </b-col>
-            <b-col cols="8">
+            <b-col lg="8">
                 <b-overlay :show="dataLoading" rounded="sm">
                     <template v-if="selectedRestaurant.name">
                         <b-row>
-                            <!-- <b-col cols="6">
-                                <b-overlay :show="imageLoading" rounded="sm">
-                                    <img class="img-responsive" v-bind:src="selectedRestaurant.image" />
-                                </b-overlay>
-                            </b-col> -->
                             <b-col cols="12">
                                 <p>Name: {{ selectedRestaurant.name }}</p>
                                 <p>Address: {{ selectedRestaurant.formatted_address }}</p>
@@ -58,7 +53,7 @@
                         </b-row>
                     </template>
                     <template v-else>
-                        please select a restaurant...
+                        <!-- please select a restaurant... -->
                     </template>
                     
                 </b-overlay>
