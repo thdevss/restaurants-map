@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use App\Http\Controllers\RestaurantController;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
+Route::get('/', [HomeController::class, 'index']);
