@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RestaurantController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/xxxx', function (Request $request) {
-    // return 'xxxxxx';
-});
+Route::get('/restaurant', [RestaurantController::class, 'index']);
+Route::get('/restaurant/image/{photo_reference}', [RestaurantController::class, 'get_image']);

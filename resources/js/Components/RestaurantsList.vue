@@ -1,13 +1,14 @@
 <template>
   
   <b-list-group>
-    <b-list-group-item  v-for="restaurant in restaurants" :key="restaurant.id"  href="#">
+    <b-list-group-item  button v-for="restaurant in restaurants" :key="restaurant.id" @click="getRestaurantData(restaurant)">
       <div class="d-flex justify-content-between align-items-center">
         {{ restaurant.name }}
-        <b-badge variant="primary" pill>{{ restaurant.id }}</b-badge>
+        <b-badge variant="success" pill v-if="restaurant.opening_hours">Open Now</b-badge>
 
       </div>
-      <small>{{ restaurant.description }}</small>
+      <small>{{ restaurant.formatted_address }}</small>
+      
     </b-list-group-item>
 
   </b-list-group>
@@ -18,14 +19,26 @@
 
 .list-group {
   position: relative;
-  /* height: 450px; */
+  height: 450px;
   overflow: scroll;
 }
 </style>
 <script>
+
 export default({
-    props: {
-        restaurants: Array,
-    },
+  components: {
+    
+  },
+  props: {
+      restaurants: Array,
+  },
+  emits: ["getRestaurant"],
+  methods: {
+    getRestaurantData(restaurant) {
+      this.$emit("getRestaurant", restaurant);
+      // this.$root.$emit('getRestaurant', restaurant)
+    }
+
+  }
 });
 </script>
