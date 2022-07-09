@@ -9,6 +9,7 @@ class HomeController extends Controller
     //
     public function index()
     {
+        // return app.blade for boot Vuejs
         return view('app');
     }
 }
