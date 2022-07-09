@@ -16,7 +16,7 @@ defineProps({
                 </svg>
 
                 <span class="fs-4 ms-2">Restaurants Box</span>
-
+            
             </a>
         </header>
 
@@ -24,5 +24,8 @@ defineProps({
             <slot />
         </main>
 
+        
+
     </b-container>
+    
 </template>

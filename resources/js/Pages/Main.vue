@@ -1,7 +1,7 @@
 <template>
     <AppLayout title="Index">
         <b-row>
-            <b-col lg="4">
+            <b-col lg="4" class="mb-4">
                 <b-form @submit="getall">
 
                     <b-input-group class="mb-3">
@@ -22,35 +22,10 @@
                     <RestaurantsList :restaurants="restaurants" @getRestaurant="onGetRestaurant" />
                 </b-overlay>
             </b-col>
-            <b-col lg="8">
-                <b-overlay :show="dataLoading" rounded="sm">
+            <b-col lg="8" v-if="!this.$isMobile()">
+                <b-overlay :show="dataLoading" rounded="sm" class="mt-0">
                     <template v-if="selectedRestaurant.name">
-                        <b-row>
-                            <b-col cols="12">
-                                <p>Name: {{ selectedRestaurant.name }}</p>
-                                <p>Address: {{ selectedRestaurant.formatted_address }}</p>
-                                <p>
-                                    Rating: {{ selectedRestaurant.rating }} / 5
-                                </p>
-                            </b-col>
-                            <b-col cols="12" class="py-4">
-                                <GMapMap
-                                    :center="selectedRestaurant.geometry.location"
-                                    :zoom="16"
-                                    map-type-id="terrain"
-                                    style="width: 100%; height: 22rem"
-                                >
-                                    <GMapCluster :zoomOnClick="true">
-                                    <GMapMarker
-                                        :position="selectedRestaurant.geometry.location"
-                                        :clickable="true"
-                                        :draggable="true"
-                                        @click="center = selectedRestaurant.geometry.location"
-                                    />
-                                    </GMapCluster>
-                                </GMapMap>
-                            </b-col>
-                        </b-row>
+                        <RestaurantData :key="desktop" :restaurant="selectedRestaurant" />
                     </template>
                     <template v-else>
                         <!-- please select a restaurant... -->
@@ -60,6 +35,21 @@
             </b-col>
 
         </b-row>
+
+        <b-modal id="restaurantPopup" v-model="isShowMobileModal" hide-footer>
+            
+            <div class="d-block text-center">
+                <b-overlay :show="dataLoading" rounded="sm">
+                    <template v-if="selectedRestaurant.name">
+                        <RestaurantData :key="mobile" :restaurant="selectedRestaurant" />
+                    </template>
+                    <template v-else>
+                        <!-- please select a restaurant... -->
+                    </template>
+                    
+                </b-overlay>
+            </div>
+        </b-modal>
     </AppLayout>
 </template>
 
@@ -73,17 +63,20 @@ import { HTTP } from '@/http.js';
 
 import AppLayout from '@/Layouts/AppLayout.vue';
 import RestaurantsList from '@/Components/RestaurantsList.vue';
+import RestaurantData from '@/Components/RestaurantData.vue';
+
 import vue3starRatings from "vue3-star-ratings";
  
 export default {
     components: {
-        AppLayout, RestaurantsList, vue3starRatings
+        AppLayout, RestaurantsList, vue3starRatings, RestaurantData
     },
     data() {
         return {
             listLoading: false,
             dataLoading: false,
             imageLoading: false,
+            isShowMobileModal: false,
             location: 'Bang Sue',
             restaurants: [],
             selectedRestaurant: {}
@@ -115,9 +108,11 @@ export default {
             // get image before showing
             this.dataLoading = true;
             this.selectedRestaurant = restaurant;
-            // if(this.selectedRestaurant.photos) {
-            //     this.getRestaurantImage(this.selectedRestaurant.photos[0].photo_reference);
-            // }
+            if(this.$isMobile()) {
+                // check; if mobile, open modal / else, open form
+                this.isShowMobileModal = true
+            }
+
             this.dataLoading = false;
         },
         async getRestaurantImage(photo_reference) {

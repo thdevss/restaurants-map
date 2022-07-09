@@ -19,7 +19,8 @@
 
 .list-group {
   position: relative;
-  height: 450px;
+  /* height: 450px; */
+  height: 70vh;
   overflow: scroll;
 }
 </style>
