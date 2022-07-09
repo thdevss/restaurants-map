@@ -23,18 +23,19 @@
                 </b-overlay>
             </b-col>
             <b-col lg="8" v-if="!this.$isMobile()">
+                <!-- show only desktop. in mobile, this section was hide -->
                 <b-overlay :show="dataLoading" rounded="sm" class="mt-0">
-                    <RestaurantData :key="desktop" :restaurant="selectedRestaurant" />
+                    <RestaurantDetail :key="desktop" :restaurant="selectedRestaurant" />
                 </b-overlay>
             </b-col>
 
         </b-row>
 
         <b-modal id="restaurantPopup" v-model="isShowMobileModal" hide-footer>
-            
+            <!-- show only mobile. follow condition in "isShowMobileModal" -->
             <div class="d-block text-center">
                 <b-overlay :show="dataLoading" rounded="sm">
-                    <RestaurantData :key="mobile" :restaurant="selectedRestaurant" />
+                    <RestaurantDetail :key="mobile" :restaurant="selectedRestaurant" />
                 </b-overlay>
             </div>
         </b-modal>
@@ -51,13 +52,12 @@ import { HTTP } from '@/http.js';
 
 import AppLayout from '@/Layouts/AppLayout.vue';
 import RestaurantsList from '@/Components/RestaurantsList.vue';
-import RestaurantData from '@/Components/RestaurantData.vue';
+import RestaurantDetail from '@/Components/RestaurantDetail.vue';
 
-import vue3starRatings from "vue3-star-ratings";
  
 export default {
     components: {
-        AppLayout, RestaurantsList, vue3starRatings, RestaurantData
+        AppLayout, RestaurantsList, RestaurantDetail
     },
     data() {
         return {
@@ -77,17 +77,16 @@ export default {
     methods: {
         async getall() {
             this.listLoading = true;
-            this.dataLoading = true;
+            this.selectedRestaurant = {}
 
             await HTTP.get(`/restaurant?keyword=${this.location}`).then(res => {
                 this.listLoading = false;
-                this.dataLoading = false;
 
                 if(!res.data.status) {
                     alert(res.data.message)
                 } else {
                     this.restaurants = res.data.data;
-                    this.selectedRestaurant = {}
+                    
                 }
                 
             })

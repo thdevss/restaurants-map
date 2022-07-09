@@ -4,16 +4,24 @@
             <b-col cols="12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ restaurant.name }}</h5>
-                        <!-- <h6 class="card-subtitle mt-2 mb-2 text-muted">Rating: {{ restaurant.rating }} / 5</h6> -->
-                        <h6 class="card-subtitle mt-2 mb-2 text-muted text-start">
+                        <div class="mb-2 text-muted float-end" v-if="!$isMobile()">
+                            <!-- for responsive design in desktop, float right -->
                             <vue3-star-ratings starSize="16" :key="restaurant.place_id" v-model="restaurant.rating" :disableClick="true" :showControl="false" step="0.1" />
-                        </h6>
+                        </div>
+
+                        <h5 class="card-title">{{ restaurant.name }}</h5>
+
+                        <div class="mt-2 mb-2 text-muted text-center" v-if="$isMobile()">
+                            <!-- for responsive design in mobile, center -->
+                            <vue3-star-ratings starSize="16" :key="restaurant.place_id" v-model="restaurant.rating" :disableClick="true" :showControl="false" step="0.1" />
+                        </div>
+                        <!-- <h6 class="card-subtitle mt-2 mb-2 text-muted">Rating: {{ restaurant.rating }} / 5</h6> -->
+                        
 
 
 
                         <p class="card-text">{{ restaurant.formatted_address }}</p>
-                        <a href="#" class="card-link">Go to website</a>
+                        <a :href="`https://www.google.com/search?q=${restaurant.name}`" target="_blank" class="card-link">More detail</a>
                         <a :href="`https://www.google.com/maps/search/?api=1&query=${restaurant.geometry.location.lat}%2C${restaurant.geometry.location.lng}&query_place_id=${restaurant.place_id}`" target="_blank" class="card-link">Open in Google Maps</a>
                     </div>
                 </div>
@@ -38,9 +46,6 @@
             </b-col>
         </b-row>
     </template>
-    <template v-else>
-        please select a restaurant...
-    </template>
 </template>
 <style scoped>
 .vue3-star-ratings__wrapper {
@@ -49,10 +54,14 @@
 }
 </style>
 <script>
+import vue3starRatings from "vue3-star-ratings";
 
-export default({
-  props: {
-      restaurant: Object,
-  },
-});
+export default {
+    components: {
+        vue3starRatings
+    },
+    props: {
+        restaurant: Object,
+    },
+};
 </script>
