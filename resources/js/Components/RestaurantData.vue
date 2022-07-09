@@ -5,8 +5,13 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ restaurant.name }}</h5>
-                        <h6 class="card-subtitle mt-2 mb-2 text-muted">Rating: {{ restaurant.rating }} / 5</h6>
-                        
+                        <!-- <h6 class="card-subtitle mt-2 mb-2 text-muted">Rating: {{ restaurant.rating }} / 5</h6> -->
+                        <h6 class="card-subtitle mt-2 mb-2 text-muted text-start">
+                            <vue3-star-ratings starSize="16" :key="restaurant.place_id" v-model="restaurant.rating" :disableClick="true" :showControl="false" step="0.1" />
+                        </h6>
+
+
+
                         <p class="card-text">{{ restaurant.formatted_address }}</p>
                         <a href="#" class="card-link">Go to website</a>
                         <a :href="`https://www.google.com/maps/search/?api=1&query=${restaurant.geometry.location.lat}%2C${restaurant.geometry.location.lng}&query_place_id=${restaurant.place_id}`" target="_blank" class="card-link">Open in Google Maps</a>
@@ -37,6 +42,12 @@
         please select a restaurant...
     </template>
 </template>
+<style scoped>
+.vue3-star-ratings__wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+</style>
 <script>
 
 export default({

@@ -24,13 +24,7 @@
             </b-col>
             <b-col lg="8" v-if="!this.$isMobile()">
                 <b-overlay :show="dataLoading" rounded="sm" class="mt-0">
-                    <template v-if="selectedRestaurant.name">
-                        <RestaurantData :key="desktop" :restaurant="selectedRestaurant" />
-                    </template>
-                    <template v-else>
-                        <!-- please select a restaurant... -->
-                    </template>
-                    
+                    <RestaurantData :key="desktop" :restaurant="selectedRestaurant" />
                 </b-overlay>
             </b-col>
 
@@ -40,13 +34,7 @@
             
             <div class="d-block text-center">
                 <b-overlay :show="dataLoading" rounded="sm">
-                    <template v-if="selectedRestaurant.name">
-                        <RestaurantData :key="mobile" :restaurant="selectedRestaurant" />
-                    </template>
-                    <template v-else>
-                        <!-- please select a restaurant... -->
-                    </template>
-                    
+                    <RestaurantData :key="mobile" :restaurant="selectedRestaurant" />
                 </b-overlay>
             </div>
         </b-modal>
