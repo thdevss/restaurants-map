@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      target: base
+    container_name: _webapp
+    ports:
+      - 8042:80 # for nginx reverse proxy
