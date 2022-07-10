@@ -24,7 +24,7 @@ FROM node:latest as vuejs
 
 RUN mkdir -p /app/public
 
-COPY package.json package-lock.json vite.config.js /app/
+COPY .env package.json package-lock.json vite.config.js /app/
 COPY resources/ /app/resources/
 COPY public/ /app/public/
 
