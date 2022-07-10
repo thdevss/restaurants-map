@@ -59,7 +59,7 @@ class Restaurant
             $next_page_token = ($response->json('next_page_token')) ? $response->json('next_page_token') : null; 
 
             // random time sleep, for prevent blocking from Google
-            sleep(rand(0.5, 1.2));
+            sleep(rand(0.01, 0.3));
         }
         
         // save tmp array to cache, default time is 10 minute (600 sec)
