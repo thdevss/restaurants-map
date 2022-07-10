@@ -49,6 +49,9 @@ class Restaurant
         // and loop get data while next_page_token is null
         while ( ($next_page_token) ) {
 
+            // random time sleep, for prevent blocking from Google
+            sleep(rand(0.01, 0.3));
+
             // call API with next_page_token and API_KEY
             $response = $this->CallAPI('pagetoken='.$next_page_token.'&key='.$query_arr['key']);
 
@@ -58,8 +61,7 @@ class Restaurant
             // if have next_page_token, get it and loop until next_page_token is null
             $next_page_token = ($response->json('next_page_token')) ? $response->json('next_page_token') : null; 
 
-            // random time sleep, for prevent blocking from Google
-            sleep(rand(0.01, 0.3));
+            
         }
         
         // save tmp array to cache, default time is 10 minute (600 sec)
