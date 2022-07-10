@@ -5,6 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile.prod
       target: base
-    container_name: _webapp
+    container_name: map_webapp
     ports:
       - 8042:80 # for nginx reverse proxy
